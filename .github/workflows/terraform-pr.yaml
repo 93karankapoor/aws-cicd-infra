@@ -82,4 +82,24 @@ jobs:
         with:
           sarif_file: results.sarif
 
+      - name: Run terraform validate
+        run: |
+          cd infra
+          terraform validate
+
+      - name: Create plan
+        id: plan
+        run: |
+          cd infra
+          terraform init -input=false -backend=false
+          terraform plan -input=false -no-color -out=tfplan.binary
+          terraform show -no-color -json tfplan.binary > tfplan.json
+        continue-on-error: false
+
+      - name: Upload plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-${{ github.sha }}
+          path: infra/tfplan.json
+
       
