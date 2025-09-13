@@ -4,7 +4,7 @@ terraform {
     bucket         = "my-company-terraform-state-prod-v1"
     key            = "prod/infra/terraform.tfstate"
     region         = "ap-south-1"
-    dynamodb_table = "terraform-state-locking"
+   # dynamodb_table = "terraform-state-locking"
     encrypt        = true
   }
 }
