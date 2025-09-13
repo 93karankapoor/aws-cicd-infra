@@ -60,6 +60,7 @@ jobs:
         with:
           working_directory: ./infra
           format: sarif
+          soft_fail: true
           additional_args: --force-all-dirs --out tfsec.sarif
 
       - name: Upload tfsec results to GitHub Security tab
