@@ -59,4 +59,5 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: infra
-          format: json
+          format: sarif
+          output_file: tfsec-results.sarif
