@@ -58,5 +58,5 @@ jobs:
       - name: tfsec scan
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
-          directory: infra
+          working_directory: infra
           format: json
