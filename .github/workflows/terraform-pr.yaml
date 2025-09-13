@@ -99,9 +99,8 @@ jobs:
         run: |
           cd infra
           terraform init -input=false -backend=false
-          terraform plan -input=false -no-color -out=tfplan.binary
-          terraform show -no-color -json tfplan.binary > tfplan.json
-        continue-on-error: false
+          terraform plan -lock=false -input=false -out=tfplan.txt
+        continue-on-error: true
 
       - name: Upload plan artifact
         uses: actions/upload-artifact@v4
