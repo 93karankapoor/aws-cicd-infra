@@ -55,8 +55,8 @@ jobs:
           tflint --init
           tflint
 
-      - name: Run tfsec (security scanning)
-        run: |
-          curl -sSL https://raw.githubusercontent.com/aquasecurity/tfsec/main/install.sh | bash
-          cd infra
-          tfsec .
+      - name: tfsec scan
+        uses: aquasecurity/tfsec-action@v1
+        with:
+          directory: infra
+          format: json
