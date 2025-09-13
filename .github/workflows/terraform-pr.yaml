@@ -18,6 +18,7 @@ env:
   TFLINT_VERSION: 0.59.1
   TFSEC_VERSION: 1.33.0
   CHECKOV_VERSION: 2.0.0
+  AWS_REGION: ap-south-1
 
 jobs:
   pr-checks:
@@ -86,6 +87,12 @@ jobs:
         run: |
           cd infra
           terraform validate
+
+      - name: Configure AWS credentials via OIDC (Assume role)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Create plan
         id: plan
