@@ -56,7 +56,7 @@ jobs:
           tflint --init
           tflint
 
-      - name: tfsec scan
+      - name: tfsec scan (security scanning)
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: ./infra
@@ -68,3 +68,12 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: tfsec.sarif
+
+      - name: Run checkov (policy-as-code)
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: infra
+          framework: terraform 
+
+      
