@@ -35,6 +35,12 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
+      - name: Configure AWS credentials via OIDC (Assume role)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Setup tflint
         run: |
           curl -sSL "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o tflint.zip
@@ -46,10 +52,10 @@ jobs:
           cd infra
           terraform fmt -write=false -diff -check
 
-      - name: Terraform init (no backend)
+      - name: Terraform init
         run: |
           cd infra
-          terraform init -backend=false
+          terraform init
 
       - name: Run tflint
         run: |
@@ -87,12 +93,6 @@ jobs:
         run: |
           cd infra
           terraform validate
-
-      - name: Configure AWS credentials via OIDC (Assume role)
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
 
       - name: Create plan
         id: plan
