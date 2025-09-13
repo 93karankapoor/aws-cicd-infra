@@ -60,5 +60,4 @@ jobs:
         with:
           working_directory: ./infra
           format: sarif
-          output: tfsec.sarif
-          additional_args: --force-all-dirs
+          additional_args: --force-all-dirs --out tfsec.sarif
